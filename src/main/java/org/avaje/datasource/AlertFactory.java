@@ -1,7 +1,6 @@
 package org.avaje.datasource;
 
-import com.avaje.ebeaninternal.server.lib.sql.DataSourceAlert;
-import com.avaje.ebeaninternal.server.lib.sql.SimpleDataSourceAlert;
+import org.avaje.datasource.alert.SmtpDataSourceAlert;
 
 /**
  * Service factory for creating the DataSourceAlert implementation.
@@ -10,6 +9,6 @@ public class AlertFactory implements DataSourceAlertFactory {
 
   @Override
   public DataSourceAlert createAlert() {
-    return new SimpleDataSourceAlert();
+    return new SmtpDataSourceAlert();
   }
 }

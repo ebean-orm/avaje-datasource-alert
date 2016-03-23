@@ -1,4 +1,4 @@
-package com.avaje.ebeaninternal.server.lib.util;
+package org.avaje.datasource.alert;
 
 /**
  * An Email address with an associated alias.
@@ -6,9 +6,9 @@ package com.avaje.ebeaninternal.server.lib.util;
 public class MailAddress {
 
 
-  final String alias;
+  private final String alias;
 
-  final String emailAddress;
+  private final String emailAddress;
 
   /**
    * Create an address with an optional alias.

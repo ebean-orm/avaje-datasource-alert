@@ -1,4 +1,4 @@
-package com.avaje.ebeaninternal.server.lib.util;
+package org.avaje.datasource.alert;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * Sends simple MailMessages via smtp.
@@ -18,20 +17,17 @@ public class MailSender implements Runnable {
 
   private static final Logger logger = LoggerFactory.getLogger(MailSender.class);
 
-  int traceLevel = 0;
-
-  Socket sserver;
-  final String server;
-
-  BufferedReader in;
-
-  OutputStreamWriter out;
-
-  MailMessage message;
-
-  MailListener listener = null;
-
   private static final int SMTP_PORT = 25;
+
+  private final String server;
+
+  private BufferedReader in;
+
+  private OutputStreamWriter out;
+
+  private MailMessage message;
+
+  private MailListener listener;
 
   /**
    * Create for a given mail server.
@@ -69,9 +65,9 @@ public class MailSender implements Runnable {
   public void send(MailMessage message) {
     try {
       for (MailAddress recipientAddress : message.getRecipientList()) {
-        sserver = new Socket(server, SMTP_PORT);
-        send(message, sserver, recipientAddress);
-        sserver.close();
+        Socket socket = new Socket(server, SMTP_PORT);
+        send(message, socket, recipientAddress);
+        socket.close();
 
         if (listener != null) {
           MailEvent event = new MailEvent(message, null);
@@ -104,9 +100,7 @@ public class MailSender implements Runnable {
       message.addHeader("From", sender.getAlias() + " <" + sender.getEmailAddress() + ">");
     }
 
-    // if (message.getHeader("From") == null){
     message.addHeader("To", recipientAddress.getAlias() + " <" + recipientAddress.getEmailAddress() + ">");
-    // }
 
     out = new OutputStreamWriter(sserver.getOutputStream());
     in = new BufferedReader(new InputStreamReader(sserver.getInputStream()));
@@ -165,42 +159,12 @@ public class MailSender implements Runnable {
   }
 
   private void writeln(String s) throws IOException {
-    if (traceLevel > 2) {
-      logger.debug("From client: " + s);
-    }
     out.write(s + "\r\n");
     out.flush();
   }
 
   private String readln() throws IOException {
-    String line = in.readLine();
-    if (traceLevel > 1) {
-      logger.debug("From server: " + line);
-    }
-    return line;
+    return in.readLine();
   }
 
-  /**
-   * Set the trace level.
-   */
-  public void setTraceLevel(int traceLevel) {
-    this.traceLevel = traceLevel;
-  }
-
-  /**
-   * Return the hostname of the local machine.
-   */
-  public String getLocalHostName() {
-    try {
-      InetAddress ipaddress = InetAddress.getLocalHost();
-      String localHost = ipaddress.getHostName();
-      if (localHost == null) {
-        return "localhost";
-      } else {
-        return localHost;
-      }
-    } catch (UnknownHostException e) {
-      return "localhost";
-    }
-  }
 }

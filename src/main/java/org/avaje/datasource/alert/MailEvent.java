@@ -1,21 +1,19 @@
-package com.avaje.ebeaninternal.server.lib.util;
+package org.avaje.datasource.alert;
 
 /**
  * Represents the success or failure of a mail send.
  */
 public class MailEvent {
 
-
   /**
    * The error indicating a send failure.
    */
-  final Throwable error;
+  private final Throwable error;
 
   /**
    * The message that was sent.
    */
-  final MailMessage message;
-
+  private final MailMessage message;
 
   /**
    * The message send failed with an error.

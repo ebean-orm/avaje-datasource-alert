@@ -1,4 +1,4 @@
-package com.avaje.ebeaninternal.server.lib.util;
+package org.avaje.datasource.alert;
 
 /**
  * Listens to see if the message was successfully sent.

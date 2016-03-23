@@ -1,4 +1,4 @@
-package com.avaje.ebeaninternal.server.lib.util;
+package org.avaje.datasource.alert;
 
 
 import java.util.ArrayList;
@@ -14,33 +14,32 @@ public class MailMessage {
   /**
    * The body content.
    */
-  final ArrayList<String> bodylines;
+  private final ArrayList<String> bodylines = new ArrayList<String>();
 
   /**
    * The sender email address.
    */
-  MailAddress senderAddress;
+  private MailAddress senderAddress;
 
   /**
    * The headers.
    */
-  final HashMap<String, String> header = new HashMap<String, String>();
+  private final HashMap<String, String> header = new HashMap<String, String>();
 
   /**
    * the recipient of the email.
    */
-  MailAddress currentRecipient;
+  private MailAddress currentRecipient;
 
   /**
    * The list of recipients.
    */
-  final ArrayList<MailAddress> recipientList = new ArrayList<MailAddress>();
+  private final ArrayList<MailAddress> recipientList = new ArrayList<MailAddress>();
 
   /**
    * Create the message.
    */
   public MailMessage() {
-    bodylines = new ArrayList<String>();
   }
 
   /**

@@ -1,9 +1,6 @@
-package com.avaje.ebeaninternal.server.lib.sql;
+package org.avaje.datasource.alert;
 
-import com.avaje.ebeaninternal.server.lib.util.MailEvent;
-import com.avaje.ebeaninternal.server.lib.util.MailListener;
-import com.avaje.ebeaninternal.server.lib.util.MailMessage;
-import com.avaje.ebeaninternal.server.lib.util.MailSender;
+import org.avaje.datasource.DataSourceAlert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,9 +14,9 @@ import org.slf4j.LoggerFactory;
  * <li>alert.mailserver = the smpt server name
  * </ul>
  */
-public class SimpleDataSourceAlert implements DataSourceAlert, MailListener {
+public class SmtpDataSourceAlert implements DataSourceAlert, MailListener {
 
-  private static final Logger logger = LoggerFactory.getLogger(SimpleDataSourceAlert.class);
+  private static final Logger logger = LoggerFactory.getLogger(SmtpDataSourceAlert.class);
 
   private static final String alertMailServerName = System.getProperty("ebean.datasource.alert.mailserver");
 
@@ -30,7 +27,7 @@ public class SimpleDataSourceAlert implements DataSourceAlert, MailListener {
   /**
    * Create a SimpleAlerter.
    */
-  public SimpleDataSourceAlert() {
+  public SmtpDataSourceAlert() {
   }
 
   /**
